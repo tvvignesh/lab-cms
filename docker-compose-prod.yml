@@ -1,0 +1,59 @@
+version: "3.9"
+services:
+  # SRM Lab Postgres Backend
+  srmlab-postgres:
+    image: postgres:14.1
+    container_name: srmlab-postgres
+    # user: postgres
+    restart: unless-stopped
+    env_file:
+      - ./.env
+    logging:
+      options:
+        max-size: 10m
+        max-file: "3"
+    ports:
+      - "5565:5432"
+    volumes:
+      - srmlab_dbdata:/dbdata
+
+  # Pgadmin Database Management Layer
+  srmlab-pgadmin:
+    container_name: srmlab-pgadmin
+    user: pgadmin
+    image: dpage/pgadmin4
+    restart: unless-stopped
+    env_file:
+      - ./.env
+    ports:
+      - "5090:80"
+    links:
+      - srmlab-postgres
+    depends_on:
+      - srmlab-postgres
+    volumes:
+      - srmlab_pgadmin-data:/var/lib/pgadmin
+
+  srmlab-server:
+    build:
+      context: .
+      dockerfile: Dockerfile-prod
+    env_file:
+      - ./.env
+    restart: unless-stopped
+    ports:
+      - "1337:1337"
+    volumes:
+      - ./config:/opt/app/config
+      - ./src:/opt/app/src
+      - ./package.json:/opt/package.json
+      - ./yarn.lock:/opt/yarn.lock
+      - ./.env:/opt/app/.env
+      - ./public/uploads:/opt/app/public/uploads
+    depends_on:
+      - srmlab-postgres
+    command: yarn start
+
+volumes:
+  srmlab_pgadmin-data:
+  srmlab_dbdata:

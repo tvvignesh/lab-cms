@@ -1,0 +1,32 @@
+{
+  "name": "srmlab-cms",
+  "private": true,
+  "version": "0.1.0",
+  "description": "SRM Lab Official Website CMS",
+  "scripts": {
+    "develop": "strapi develop",
+    "start": "strapi start",
+    "build": "strapi build",
+    "strapi": "strapi"
+  },
+  "devDependencies": {},
+  "dependencies": {
+    "@strapi/plugin-graphql": "^4.21.1",
+    "@strapi/plugin-i18n": "^4.21.1",
+    "@strapi/plugin-users-permissions": "^4.21.1",
+    "@strapi/strapi": "^4.21.1",
+    "nodemailer": "^6.9.9",
+    "pg": "^8.11.3",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-router-dom": "^5.2.0",
+    "styled-components": "^5.2.1"
+  },
+  "author": {
+    "name": "Vignesh T.V <tv9867@srmist.edu.in>"
+  },
+  "strapi": {
+    "uuid": "722983a8-6810-4330-8a7b-c9d883ccb307"
+  },
+  "license": "MIT"
+}
